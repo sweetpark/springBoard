@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create New Board</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container{
+            max-width: 560px;
+        }
+        .field-error {
+            border-color : #dc3545;
+            color : #dc3545;
+        }
+        #mainNav {
+        background-color: #f8f9fa; /* Light background for emphasis */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds shadow to the navbar for emphasis */
+        font-size: 1.1rem; /* Slightly larger font */
+        }
+
+        .navbar-brand {
+            font-weight: bold; /* Emphasize the brand text */
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav .nav-link {
+            color: #333; /* Darker link color */
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #007bff; /* Change color on hover for emphasis */
+            text-decoration: underline;
+        }
+    </style>
+
+</head>
+<body>
+<!--nav-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm" id="mainNav">
+    <div class="container px-4 px-lg-5">
+        <div class="collapse navbar-collapse justify-content-center" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members/{loginId}(loginId=${member.loginId})}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members/{loginId}/boards(loginId=${member.loginId})}">Boards</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{'/members/'+${member.loginId}+'/boards/new/form'}">Create Post</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members/{loginId}/edit(loginId=${member.loginId})}">Update Account</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h1 class="text-center">Create Post</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form th:action="@{/members/{loginId}/boards/new/form(loginId=${member.loginId})}" th:object="${board}" method="post" enctype="multipart/form-data">
+                <div class="form-group mb-3">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" th:field="*{title}" class="form-control">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="file">첨부파일:</label>
+                    <input type="file" id="file" th:field="*{attachFile}" class="form-control">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="images">이미지 파일:</label>
+                    <input type="file" multiple="multiple" id="images" th:field="*{imageFiles}" class="form-control" >
+                </div>
+                <div class="form-group mb-3">
+                    <label for="body">Body:</label>
+                    <textarea id="body" th:field="*{body}" class="form-control"></textarea>
+                </div>
+
+                <button type="submit" class="w-100 btn btn-success btn-lg">Submit</button>
+                <a th:href="@{'/members/' + ${member.loginId} + '/boards'}">Back to Boards</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
