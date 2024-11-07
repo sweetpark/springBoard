@@ -1,5 +1,6 @@
 package project.board;
 
+import com.zaxxer.hikari.HikariDataSource;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.Filter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -9,8 +10,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import project.board.domain.ConnectionConst;
+import project.board.domain.repository.boardRepository.BoardDBRepository;
 import project.board.domain.repository.boardRepository.BoardMemRepository;
 import project.board.domain.repository.boardRepository.BoardRepository;
+import project.board.domain.repository.memberRepository.MemberDBRepository;
 import project.board.domain.repository.memberRepository.MemberMemRespository;
 import project.board.domain.repository.memberRepository.MemberRepository;
 import project.board.web.filter.LogFilter;
@@ -25,13 +29,14 @@ public class AppConfig implements WebMvcConfigurer {
 
     @Bean
     public MemberRepository getMemberRepository() {
-        return new MemberMemRespository();
-        // return new MemberDBRepository;
+//        return new MemberMemRespository();
+         return new MemberDBRepository(DataSourceConfig.dataSource());
     }
 
     @Bean
     public BoardRepository boardRepository() {
-        return new BoardMemRepository();
+//        return new BoardMemRepository();
+         return new BoardDBRepository(DataSourceConfig.dataSource());
     }
 
     @Bean

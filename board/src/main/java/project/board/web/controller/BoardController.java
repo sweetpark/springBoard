@@ -18,6 +18,7 @@ import project.board.domain.dto.UploadFile;
 import project.board.domain.repository.boardRepository.BoardRepository;
 import project.board.domain.repository.boardRepository.fileStore.FileStore;
 import project.board.domain.repository.memberRepository.MemberRepository;
+import project.board.web.service.BoardService;
 
 
 import java.io.File;
@@ -34,11 +35,13 @@ public class BoardController {
 
     private final MemberRepository memberRepository;
     private final BoardRepository boardRepository;
+    private final BoardService boardService;
     private final FileStore fileStore;
 
-    public BoardController(MemberRepository memberRepository, BoardRepository boardRepository, FileStore fileStore){
+    public BoardController(MemberRepository memberRepository, BoardRepository boardRepository, BoardService boardService, FileStore fileStore){
         this.memberRepository = memberRepository;
         this.boardRepository = boardRepository;
+        this.boardService = boardService;
         this.fileStore = fileStore;
     }
 
@@ -91,7 +94,7 @@ public class BoardController {
         UploadFile uploadAttachFile = fileStore.storeFile(attachFile);
         List<UploadFile> storeImageFiles = fileStore.storeFiles(images);
 
-        boardRepository.updateBoard(id,title,uploadAttachFile,storeImageFiles,body);
+        boardService.updateBoard(id,title,uploadAttachFile,storeImageFiles,body);
         return "redirect:/members/"+loginId+"/boards";
     }
 
@@ -116,7 +119,7 @@ public class BoardController {
         board.setImageFiles(storeImageFiles);
         board.setMemberInfo(memberRepository.findByLoginId(loginId));
 
-        boardRepository.save(board);
+        boardService.saveBoard(board);
         return "redirect:/members/"+loginId+"/boards";
     }
 

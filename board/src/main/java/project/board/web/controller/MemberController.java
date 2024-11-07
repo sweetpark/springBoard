@@ -71,17 +71,17 @@ public class MemberController {
         return "home";
     }
 
-    @PostConstruct
-    public void initData(){
-        Member member1 = new Member("admin","admin","admin","admin");
-        Member member2 = new Member("test","test","test","seoul");
-        Member member3 = new Member("test2","spring","test2","suwon");
-
-        memberRepository.save(member1);
-        memberRepository.save(member2);
-        memberRepository.save(member3);
-
-    }
+//    @PostConstruct
+//    public void initData(){
+//        Member member1 = new Member("admin","admin","admin","admin");
+//        Member member2 = new Member("test","test","test","seoul");
+//        Member member3 = new Member("test2","spring","test2","suwon");
+//
+//        memberRepository.save(member1);
+//        memberRepository.save(member2);
+//        memberRepository.save(member3);
+//
+//    }
 
     @InitBinder
     private void init(WebDataBinder webDataBinder){

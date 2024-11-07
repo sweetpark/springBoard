@@ -31,6 +31,7 @@ public class MemberEditController {
 
         Member findMember = memberRepository.findByLoginId(loginId);
         memberUpdateForm form = new memberUpdateForm();
+        form.setId(findMember.getId());
         form.setName(findMember.getName());
         form.setPasswd(findMember.getPasswd());
         form.setAddress(findMember.getAddress());
@@ -49,6 +50,7 @@ public class MemberEditController {
             return "member/edit-form";
         }
         Member member = new Member();
+        member.setId(form.getId());
         member.setLoginId(loginId);
         member.setName(form.getName());
         member.setPasswd(form.getPasswd());

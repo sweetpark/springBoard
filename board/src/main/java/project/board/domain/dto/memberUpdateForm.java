@@ -9,7 +9,7 @@ import project.board.web.validate.springBeanValidation.ValidPassword;
 @Setter
 public class memberUpdateForm {
 
-
+    private Long id;
     private String loginId;
     @NotBlank(message="이름은 필수로 입력하여야 합니다.")
     private String name;
