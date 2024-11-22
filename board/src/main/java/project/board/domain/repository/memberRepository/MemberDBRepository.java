@@ -98,7 +98,7 @@ public class MemberDBRepository implements MemberRepository{
 
                 return findMember;
             }else{
-                throw new NoSuchElementException("member not found");
+                return null;
             }
 
         }catch(SQLException e){

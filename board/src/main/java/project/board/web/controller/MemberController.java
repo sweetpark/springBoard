@@ -51,6 +51,7 @@ public class MemberController {
     @PostMapping("/form")
     public String registryMember(@Validated @ModelAttribute Member member, BindingResult bindingResult, Model model){
 
+
         if (bindingResult.hasErrors()){
             return "member/member-form";
         }
