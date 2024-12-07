@@ -13,7 +13,6 @@
         - file.dir : 업로드할 파일 다운로드 경로 지정 (서버 경로)
 
 <pre>
-💡
 
 IDE 실행
 
@@ -22,7 +21,6 @@ IDE 실행
 </pre>
 
 <pre>
-💡
 
 JAR 실행
 
@@ -58,14 +56,14 @@ JAR 실행
     - 스프링 검증 : 커스텀 애노테이션 + @Bean Validation
     - 수동 검증 : 커스텀 클래스 적용 ( @Validated +  CustomValidation 주입)
 
-<pre>
+<aside>
 블로그 정리
 
 https://gradualprecision.tistory.com/207
 
-[https://gradualprecision.tistory.com/210](https://gradualprecision.tistory.com/210)
+https://gradualprecision.tistory.com/210
 
-</pre>
+</aside>
 
 ![%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-11-20_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_11 11 21](https://github.com/user-attachments/assets/cae4b804-8837-4186-a282-ce005ea59f91)
 
@@ -79,12 +77,12 @@ https://gradualprecision.tistory.com/207
 - Member + Board 맵핑
     - Board 외래키 → Member
  
-<pre>
+<aside>
 블로그 정리
 
 https://gradualprecision.tistory.com/211
 
-</pre>
+</aside>
 
 
 ![%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-11-20_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_11 13 52](https://github.com/user-attachments/assets/e8ea9a48-4f32-4162-a11c-ffdc4d73af46)
@@ -103,11 +101,14 @@ https://gradualprecision.tistory.com/211
 ![%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-11-20_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_11 13 29](https://github.com/user-attachments/assets/eb5c3a96-efa5-46a7-9d62-3218ae93e94f)
 
 <pre>
+<aside>
 
 블로그 정리
 
 https://gradualprecision.tistory.com/139
 
+</aside>
+    
 </pre>
 
 # 메인페이지
