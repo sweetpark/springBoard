@@ -40,6 +40,47 @@ JAR 실행
 
 
 # URL 디자인
+# API 목록
+
+## 멤버 URL
+
+| 이름                 | TYPE | URL                                      | 설명                       |
+|----------------------|------|------------------------------------------|----------------------------|
+| 회원 등록            | POST | http://localhost/members/form            | 회원 등록                  |
+| 회원 등록 페이지 조회 | GET  | http://localhost/members/form            | 회원 등록 페이지 조회      |
+| 홈                   | GET  | http://localhost/members                 | 홈                         |
+| 회원 정보 조회       | GET  | http://localhost/members/{loginId}/edit  | 회원정보 조회              |
+| 회원 정보 수정       | POST | http://localhost/members/{loginId}/edit  | 회원정보 수정              |
+
+## 로그인 URL
+
+| 이름      | TYPE | URL                               | 설명               |
+|-----------|------|-----------------------------------|--------------------|
+| 로그아웃  | GET  | http://localhost/members/logout   | 로그아웃 진행      |
+| 로그인    | GET  | http://localhost/members/login    | 로그인 페이지 조회 |
+| 로그인    | POST | http://localhost/members/login    | 로그인             |
+
+## 게시판 URL
+
+| 이름                        | TYPE | URL                                                     | 설명                                    |
+|-----------------------------|------|---------------------------------------------------------|-----------------------------------------|
+| 게시판 조회                 | GET  | http://localhost/members/{loginId}/boards               | 게시판 조회                             |
+| 게시글 개별 조회            | GET  | http://localhost/members/{loginId}/boards/{id}          | 게시판 개별 조회                        |
+| 게시글 수정페이지 조회       | GET  | http://localhost/members/{loginId}/boards/edit/{id}     | 게시글 수정 페이지 조회                 |
+| 게시글 수정                 | POST | http://localhost/members/{loginId}/boards/edit/{id}     | 게시글 수정                             |
+| 게시글 생성 페이지 조회      | GET  | http://localhost/members/{loginId}/boards/new/form      | 게시글 생성 페이지 조회                 |
+| 게시글 생성                 | POST | http://localhost/members/{loginId}/boards/new/form      | 게시글 생성                             |
+| 게시글 이미지 파일 다운로드 | GET  | http://localhost/members/{loginId}/boards/images/{filename} | 게시글 세부 내용 중 이미지 파일 다운로드 |
+| 게시글 파일 다운로드        | GET  | http://localhost/members/{loginId}/boards/attach/{id}   | 게시글 세부 내용 중 파일 다운로드       |
+| 게시글 삭제                 | POST | http://localhost/members/{loginId}/boards/{id}/delete   | 게시글 삭제                             |
+
+## ErrorPage URL
+
+| 이름            | TYPE | URL                                | 설명           |
+|-----------------|------|------------------------------------|----------------|
+| 500 에러 페이지 | GET  | http://localhost/errors/custom/500 | 500 에러 페이지 |
+| 502 에러 페이지 | GET  | http://localhost/errors/custom/502 | 502 에러 페이지 |
+| 404 에러 페이지 | GET  | http://localhost/errors/custom/404 | 404 에러 페이지 |
 
 
 # 로그인 화면
