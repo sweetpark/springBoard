@@ -34,11 +34,11 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         }else if(matcher.find()){
             String account = matcher.group(1);
 
-            Member authAccount = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+            String authAccount = (String) session.getAttribute(SessionConst.LOGIN_MEMBER);
 
-            if (authAccount.getLoginId() == null ||  !authAccount.getLoginId().equals(account)){
+            if (authAccount == null ||  !authAccount.equals(account)){
                 response.sendRedirect("/members/login?redirectURI="+requestURI);
-                log.info("Session loginId: {}, URL account: {}", authAccount.getLoginId(), account);
+                log.info("Session loginId: {}, URL account: {}", authAccount, account);
                 return false;
             }
 

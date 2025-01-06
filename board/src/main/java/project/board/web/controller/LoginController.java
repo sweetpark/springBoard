@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import project.board.auth.session.SessionStore;
 import project.board.domain.dto.LoginForm;
 import project.board.domain.dto.Member;
 import project.board.domain.repository.boardRepository.BoardRepository;
@@ -21,6 +22,8 @@ import project.board.web.SessionConst;
 import project.board.web.service.login.LoginService;
 import project.board.web.validate.bindingResultValidation.BindigResultValidate;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 
 @Slf4j
 @RequestMapping(value="/members")
@@ -28,18 +31,16 @@ import project.board.web.validate.bindingResultValidation.BindigResultValidate;
 public class LoginController {
     private final MemberRepository memberRepository;
     private final LoginService loginService;
-    private final BoardRepository boardRepository;
-    private final BindigResultValidate bindingResultValidate;
+    private final SessionStore sessionStore;
+
 
     @Autowired
     public LoginController(MemberRepository memberRepository,
                             LoginService loginService,
-                            BoardRepository boardRepository,
-                            BindigResultValidate bindingResultValidate){
+                           SessionStore sessionStore){
         this.memberRepository = memberRepository;
         this.loginService = loginService;
-        this.boardRepository = boardRepository;
-        this.bindingResultValidate = bindingResultValidate;
+        this.sessionStore = sessionStore;
     }
 
 
@@ -76,15 +77,16 @@ public class LoginController {
 
 
         if (loginService.loginCheck(loginForm.getLoginId(), loginForm.getPasswd())){
+            // 세션 생성
             HttpSession session = request.getSession(true);
-            Member loginMember= memberRepository.findByLoginId(loginForm.getLoginId());
-            session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+            // 세션 담을때 id 값만 담기
+            session.setAttribute(SessionConst.LOGIN_MEMBER, loginForm.getLoginId());
+            sessionStore.save(session);
+
             return "redirect:/members/" + loginForm.getLoginId();
         }else{
             bindigResult.addError(new ObjectError("LoginForm",null,null,"로그인에 실패했습니다"));
         }
-
-
 
         return "login";
     }

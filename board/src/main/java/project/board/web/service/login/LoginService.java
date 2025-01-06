@@ -18,6 +18,7 @@ public class LoginService {
     public boolean loginCheck(String loginId, String passwd){
         Member findMember = memberRepository.findByLoginId(loginId);
         if (findMember != null){
+            //CHECKME : 비밀번호 암호화 / 복호화 진행
             if (findMember.getPasswd().equals(passwd)){
                 return true;
             }
