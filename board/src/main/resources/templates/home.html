@@ -40,16 +40,16 @@
         <div class="collapse navbar-collapse justify-content-center" id="navbarResponsive">
             <ul class="navbar-nav ms-auto py-4 py-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members/{loginId}(loginId=${member.loginId})}">Home</a>
+                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members/{loginId}/boards(loginId=${member.loginId})}">Boards</a>
+                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members/boards}">Boards</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{'/members/'+${member.loginId}+'/boards/new/form'}">Create Post</a>
+                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{'/members/boards/new/form'}">Create Post</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members/{loginId}/edit(loginId=${member.loginId})}">Update Account</a>
+                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members/edit}">Update Account</a>
                 </li>
 <!--  임시 코드 -->
                 <li class="nav-item">
@@ -107,13 +107,13 @@
         <tbody th:if="${boards != null}" th:each="board : ${boards}">
             <tr>
                 <td>
-                    <a th:href="@{'/members/'+${member.loginId}+'/boards/edit/'+${board.id}}" th:text="${board.title}">Board Title</a>
+                    <a th:href="@{'/members/boards/edit/'+${board.id}}" th:text="${board.title}">Board Title</a>
                 </td>
                 <td>
                     <p th:text="${board.memberInfo.loginId}"></p>
                 </td>
                 <td>
-                    <form th:action="@{'/members/' + ${member.loginId} + '/boards/' + ${board.id} + '/delete'}" method="post" style="display: inline;">
+                    <form th:action="@{'/members/boards/' + ${board.id} + '/delete'}" method="post" style="display: inline;">
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this post?');">Delete</button>
                     </form>
                 </td>

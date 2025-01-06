@@ -2,6 +2,7 @@ package project.board.web.service.login;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import project.board.auth.enc.AES256Enc;
 import project.board.domain.dto.Member;
 import project.board.domain.repository.memberRepository.MemberRepository;
 
@@ -18,8 +19,7 @@ public class LoginService {
     public boolean loginCheck(String loginId, String passwd){
         Member findMember = memberRepository.findByLoginId(loginId);
         if (findMember != null){
-            //CHECKME : 비밀번호 암호화 / 복호화 진행
-            if (findMember.getPasswd().equals(passwd)){
+            if (AES256Enc.decrypt(findMember.getPasswd()).equals(passwd)){
                 return true;
             }
         }

@@ -39,16 +39,16 @@
         <div class="collapse navbar-collapse justify-content-center" id="navbarResponsive">
             <ul class="navbar-nav ms-auto py-4 py-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members/{loginId}(loginId=${member.loginId})}">Home</a>
+                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members/{loginId}/boards(loginId=${member.loginId})}">Boards</a>
+                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members/boards}">Boards</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{'/members/'+${member.loginId}+'/boards/new/form'}">Create Post</a>
+                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{'/members/boards/new/form'}">Create Post</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members/{loginId}/edit(loginId=${member.loginId})}">Update Account</a>
+                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members/edit}">Update Account</a>
                 </li>
             </ul>
         </div>
@@ -60,7 +60,7 @@
     <h1 class="text-center">Update Account</h1>
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <form th:action="@{/members/{loginId}/edit(loginId=${member.loginId})}" th:object="${member}" method="post">
+            <form th:action="@{/members/edit}" th:object="${member}" method="post">
 
                 <input type="hidden" th:field="*{loginId}" />
 

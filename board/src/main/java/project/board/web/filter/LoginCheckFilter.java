@@ -5,14 +5,17 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.PatternMatchUtils;
+import project.board.auth.session.SessionStore;
 import project.board.web.SessionConst;
 
 import java.io.IOException;
 
 
 @Slf4j
+@RequiredArgsConstructor
 public class LoginCheckFilter implements Filter {
 
     private static final String[] whiteList = {"/members/login", "/members/form", "/members/logout", "/css/*"};

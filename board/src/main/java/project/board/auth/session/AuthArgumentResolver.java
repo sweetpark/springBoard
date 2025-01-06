@@ -1,8 +1,10 @@
 package project.board.auth.session;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -11,8 +13,11 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import project.board.web.SessionConst;
 
+import java.io.IOException;
+
 @RequiredArgsConstructor
 @Component
+@Slf4j
 public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final SessionStore sessionStore;
@@ -27,13 +32,16 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         HttpSession session = request.getSession(false);
 
+        HttpServletResponse response = (HttpServletResponse )webRequest.getNativeResponse();
         if (session == null){
-            throw new IllegalArgumentException("세션이 존재하지 않습니다");
+            response.sendRedirect("members/login");
+            log.info("세션이 존재하지 않습니다");
         }
 
         SessionWrapper sessionWrapper = sessionStore.getStore().get(session.getId());
         if(sessionWrapper == null){
-            throw new IllegalArgumentException("세션 정보가 존재하지 않습니다");
+            response.sendRedirect("members/login");
+            log.info("세션 저장소안에 세션이 존재하지 않습니다");
         }
 
         return sessionWrapper.getSession().getAttribute(SessionConst.LOGIN_MEMBER);

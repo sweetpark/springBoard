@@ -3,24 +3,23 @@ package project.board.web.interceptor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
-import project.board.domain.dto.Member;
+import project.board.auth.session.SessionStore;
 import project.board.web.SessionConst;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+@RequiredArgsConstructor
 @Slf4j
 public class LoginCheckInterceptor implements HandlerInterceptor {
+
+    private final SessionStore sessionStore;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         String requestURI = request.getRequestURI();
-        Pattern pattern = Pattern.compile("/members/([^/]+)");
-        Matcher matcher = pattern.matcher(requestURI);
-
 
         log.info("인증 체크 인터셉트 실행 {}", requestURI);
         HttpSession session = request.getSession(false);
@@ -31,23 +30,17 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             response.sendRedirect("/members/login?redirectURI=" + requestURI);
             return false;
 
-        }else if(matcher.find()){
-            String account = matcher.group(1);
+        }else if(sessionStore.getStore().get(session.getId()) == null) {
+            log.info("로그인이 만료되었거나, 미인증 요청");
 
-            String authAccount = (String) session.getAttribute(SessionConst.LOGIN_MEMBER);
-
-            if (authAccount == null ||  !authAccount.equals(account)){
-                response.sendRedirect("/members/login?redirectURI="+requestURI);
-                log.info("Session loginId: {}, URL account: {}", authAccount, account);
-                return false;
-            }
-
-        }else{
-            response.sendRedirect("/errors/custom/404");
-            log.info("Not matcher loginId, Error 404!");
+            response.sendRedirect("/members/login?redirectURI=" + requestURI);
             return false;
         }
-
-        return true;
+        else{
+            sessionStore.updateTime(session.getId());
+            return true;
+        }
     }
+
+
 }

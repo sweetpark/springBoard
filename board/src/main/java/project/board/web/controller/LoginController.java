@@ -48,9 +48,9 @@ public class LoginController {
     public String logout(@ModelAttribute LoginForm loginForm,HttpServletRequest request){
 
         HttpSession session = request.getSession(false);
-        if ( session != null){
-            session.invalidate();
-        }
+        sessionStore.getStore().remove(session.getId());
+        session.invalidate();
+
         return "login";
     }
 
@@ -83,7 +83,7 @@ public class LoginController {
             session.setAttribute(SessionConst.LOGIN_MEMBER, loginForm.getLoginId());
             sessionStore.save(session);
 
-            return "redirect:/members/" + loginForm.getLoginId();
+            return "redirect:/members";
         }else{
             bindigResult.addError(new ObjectError("LoginForm",null,null,"로그인에 실패했습니다"));
         }

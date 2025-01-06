@@ -15,12 +15,6 @@ import java.util.List;
 public class SessionConfig implements WebMvcConfigurer {
     private final AuthArgumentResolver resolver;
 
-//    public CacheManager cacheManager(){
-//        //ehcache사용
-//        return null;
-//    }
-
-
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(resolver);

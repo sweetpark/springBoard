@@ -65,21 +65,11 @@ public class MemberController {
         return "redirect:/members/login";
     }
 
-    @GetMapping("/{loginId}")
-    public String home(@PathVariable("loginId") String loginId, Model model, HttpServletRequest request, @AuthenticatedLoginId String tmp){
-        System.out.println(tmp);
-        HttpSession session = request.getSession(false);
+    @GetMapping
+    public String home(@AuthenticatedLoginId String loginId, Model model){
 
-        if (session == null){
-            return "redirect:/members/login";
-        }
-
-        String auth = (String)session.getAttribute(SessionConst.LOGIN_MEMBER);
-
-//        Member member = memberRepository.findByLoginId(loginId);
-        Member member = memberRepository.findByLoginId(auth);
-//        List<Board> boards = boardRepository.findBoardsByMember(loginId);
-        List<Board> boards = boardRepository.findBoardsByMember(auth);
+        Member member = memberRepository.findByLoginId(loginId);
+        List<Board> boards = boardRepository.findBoardsByMember(loginId);
 
         model.addAttribute("member", member);
         model.addAttribute("boards", boards);
