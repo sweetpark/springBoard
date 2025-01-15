@@ -11,6 +11,7 @@ public class BoardForm {
     private String title;
     private String body;
     private Member memberInfo;
+    //CHECKME memberId 로 수정
     private List<MultipartFile> imageFiles;
     private MultipartFile attachFile;
 }
