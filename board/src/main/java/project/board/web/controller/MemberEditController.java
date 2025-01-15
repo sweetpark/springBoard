@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import project.board.auth.session.AuthenticatedLoginId;
 import project.board.domain.dto.Member;
 import project.board.domain.dto.memberUpdateForm;
 import project.board.domain.repository.boardRepository.BoardRepository;
@@ -26,8 +27,8 @@ public class MemberEditController {
         this.boardRepository = boardRepository;
     }
 
-    @GetMapping("/{loginId}/edit")
-    public String getEditForm(@PathVariable("loginId") String loginId, Model model){
+    @GetMapping("/edit")
+    public String getEditForm(@AuthenticatedLoginId String loginId, Model model){
 
         Member findMember = memberRepository.findByLoginId(loginId);
         memberUpdateForm form = new memberUpdateForm();
@@ -41,8 +42,8 @@ public class MemberEditController {
     }
 
 
-    @PostMapping("/{loginId}/edit")
-    public String postEditForm(@PathVariable("loginId") String loginId,
+    @PostMapping("/edit")
+    public String postEditForm(@AuthenticatedLoginId String loginId,
                                @Validated @ModelAttribute("member") memberUpdateForm form,
                                BindingResult bindingResult){
 
@@ -60,7 +61,7 @@ public class MemberEditController {
         memberRepository.updateMember(loginId, member);
 
         //수정 완료 알림
-        return "redirect:/members/" + loginId;
+        return "redirect:/members";
     }
 
 

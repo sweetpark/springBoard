@@ -1,6 +1,9 @@
 package project.board.web.controller;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.Session;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,11 +12,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import project.board.auth.session.AuthenticatedLoginId;
 import project.board.domain.dto.Board;
 import project.board.domain.dto.LoginForm;
 import project.board.domain.dto.Member;
 import project.board.domain.repository.boardRepository.BoardRepository;
 import project.board.domain.repository.memberRepository.MemberRepository;
+import project.board.web.SessionConst;
 import project.board.web.service.login.LoginService;
 import project.board.web.validate.bindingResultValidation.BindigResultValidate;
 
@@ -60,9 +65,8 @@ public class MemberController {
         return "redirect:/members/login";
     }
 
-    @GetMapping("/{loginId}")
-    public String home(@PathVariable("loginId") String loginId, Model model){
-
+    @GetMapping
+    public String home(@AuthenticatedLoginId String loginId, Model model){
 
         Member member = memberRepository.findByLoginId(loginId);
         List<Board> boards = boardRepository.findBoardsByMember(loginId);
@@ -71,18 +75,6 @@ public class MemberController {
         model.addAttribute("boards", boards);
         return "home";
     }
-
-//    @PostConstruct
-//    public void initData(){
-//        Member member1 = new Member("admin","admin","admin","admin");
-//        Member member2 = new Member("test","test","test","seoul");
-//        Member member3 = new Member("test2","spring","test2","suwon");
-//
-//        memberRepository.save(member1);
-//        memberRepository.save(member2);
-//        memberRepository.save(member3);
-//
-//    }
 
     @InitBinder
     private void init(WebDataBinder webDataBinder){

@@ -5,14 +5,17 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.PatternMatchUtils;
+import project.board.auth.session.SessionStore;
 import project.board.web.SessionConst;
 
 import java.io.IOException;
 
 
 @Slf4j
+@RequiredArgsConstructor
 public class LoginCheckFilter implements Filter {
 
     private static final String[] whiteList = {"/members/login", "/members/form", "/members/logout", "/css/*"};
@@ -27,9 +30,9 @@ public class LoginCheckFilter implements Filter {
         try{
             log.info("인증체크 필터 시작 {}", requestURI);
 
-            if(loginCheckPath(requestURI)){
+            if(loginCheckPath(requestURI)){ // 로그인이 필요없는 페이지 필터링
                 log.info("인증체크 로직 실행 {} ", requestURI);
-                HttpSession session = httpRequest.getSession(false);
+                HttpSession session = httpRequest.getSession(false); // 세션 요청에서 가져오기
 
                 if (session == null || session.getAttribute(SessionConst.LOGIN_MEMBER) == null){
                     log.info("미인증 사용자 요청 {}", requestURI);

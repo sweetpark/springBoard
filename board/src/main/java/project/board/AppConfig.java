@@ -3,6 +3,7 @@ package project.board;
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.Filter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import project.board.auth.session.SessionStore;
 import project.board.domain.ConnectionConst;
 import project.board.domain.repository.boardRepository.BoardDBRepository;
 import project.board.domain.repository.boardRepository.BoardMemRepository;
@@ -25,7 +27,10 @@ import project.board.web.interceptor.LoginCheckInterceptor;
 
 @Configuration
 @ComponentScan
+@RequiredArgsConstructor
 public class AppConfig implements WebMvcConfigurer {
+
+    private final SessionStore sessionStore;
 
     @Bean
     public MemberRepository getMemberRepository() {
@@ -77,7 +82,7 @@ public class AppConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/css/**", "/*.ico", "/error", "/errors/custom/**");
 
-        registry.addInterceptor(new LoginCheckInterceptor())
+        registry.addInterceptor(new LoginCheckInterceptor(sessionStore))
                 .order(2)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/members/*/boards/*","/members/login", "/members/form", "/members/logout", "/css/**", "/*.ico", "/error","/errors/custom/**");

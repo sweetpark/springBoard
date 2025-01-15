@@ -40,16 +40,16 @@
         <div class="collapse navbar-collapse justify-content-center" id="navbarResponsive">
             <ul class="navbar-nav ms-auto py-4 py-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members/{loginId}(loginId=${member.loginId})}">Home</a>
+                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members/{loginId}/boards(loginId=${member.loginId})}">Boards</a>
+                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members/boards}">Boards</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{'/members/'+${member.loginId}+'/boards/new/form'}">Create Post</a>
+                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{'/members/boards/new/form'}">Create Post</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members/{loginId}/edit(loginId=${member.loginId})}">Update Account</a>
+                    <a class="nav-link px-lg-3 py-3 py-lg-4" th:href="@{/members/edit}">Update Account</a>
                 </li>
             </ul>
         </div>
@@ -60,7 +60,7 @@
     <h1 class="text-center">Create Post</h1>
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <form th:action="@{/members/{loginId}/boards/new/form(loginId=${member.loginId})}" th:object="${board}" method="post" enctype="multipart/form-data">
+            <form th:action="@{/members/boards/new/form}" th:object="${board}" method="post" enctype="multipart/form-data">
                 <div class="form-group mb-3">
                     <label for="title">Title:</label>
                     <input type="text" id="title" th:field="*{title}" class="form-control">

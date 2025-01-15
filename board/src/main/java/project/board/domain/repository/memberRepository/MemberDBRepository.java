@@ -6,15 +6,18 @@ import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
 import org.springframework.jdbc.support.SQLExceptionTranslator;
+import project.board.auth.enc.AES256Enc;
 import project.board.domain.dto.Member;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
+
+
 
 public class MemberDBRepository implements MemberRepository{
+
 
     private final DataSource dataSource;
     private final SQLExceptionTranslator excep;
@@ -46,7 +49,7 @@ public class MemberDBRepository implements MemberRepository{
             pstmt =con.prepareStatement(sql);
             pstmt.setString(1, member.getLoginId());
             pstmt.setString(2, member.getName());
-            pstmt.setString(3, member.getPasswd());
+            pstmt.setString(3, AES256Enc.encrypt(member.getPasswd()));
             pstmt.setString(4, member.getAddress());
             pstmt.executeUpdate();
         }catch(SQLException e){
@@ -151,7 +154,7 @@ public class MemberDBRepository implements MemberRepository{
             con = getConnection();
             pstmt =con.prepareStatement(sql);
             pstmt.setString(1, member.getName());
-            pstmt.setString(2, member.getPasswd());
+            pstmt.setString(2, AES256Enc.encrypt(member.getPasswd()));
             pstmt.setString(3, member.getAddress());
             pstmt.setString(4,loginId);
 

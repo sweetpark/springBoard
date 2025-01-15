@@ -2,6 +2,7 @@ package project.board.web.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriUtils;
+import project.board.auth.session.AuthenticatedLoginId;
+import project.board.auth.session.SessionStore;
 import project.board.domain.dto.Board;
 import project.board.domain.dto.BoardForm;
 import project.board.domain.dto.Member;
@@ -30,7 +33,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping(value="/members/{loginId}/boards")
+@RequestMapping(value="/members/boards")
 public class BoardController {
 
     private final MemberRepository memberRepository;
@@ -46,7 +49,7 @@ public class BoardController {
     }
 
     @GetMapping
-    public String board(@PathVariable("loginId") String loginId, Model model) {
+    public String board(@AuthenticatedLoginId String loginId, Model model) {
         Member member = memberRepository.findByLoginId(loginId); // loginId로 member 조회
         List<Board> boards = boardRepository.findAll(); // 해당 회원의 게시판 조회
 
@@ -56,7 +59,7 @@ public class BoardController {
     }
 
     @GetMapping("{id}")
-    public String getBoard(@PathVariable("loginId") String loginId , @PathVariable("id") Long id, HttpServletRequest request, Model model){
+    public String getBoard(@AuthenticatedLoginId String loginId , @PathVariable("id") Long id, HttpServletRequest request, Model model){
 
         Member member = memberRepository.findByLoginId(loginId);
         Board board = boardRepository.findByBoard(id);
@@ -70,7 +73,7 @@ public class BoardController {
 
 
     @GetMapping("/edit/{id}")
-    public String getEditBoard(@PathVariable("loginId") String loginId ,@PathVariable("id") Long id,Model model){
+    public String getEditBoard(@AuthenticatedLoginId String loginId ,@PathVariable("id") Long id,Model model){
         Member member = memberRepository.findByLoginId(loginId);
         Board board = boardRepository.findByBoard(id);
 
@@ -80,7 +83,7 @@ public class BoardController {
     }
 
     @PostMapping("/edit/{id}")
-    public String postEditBoard(@PathVariable("loginId") String loginId,
+    public String postEditBoard(@AuthenticatedLoginId String loginId,
                                 @PathVariable("id") Long id,
                                 @RequestParam("title") String title,
                                 @RequestParam("attachFile") MultipartFile attachFile,
@@ -95,11 +98,11 @@ public class BoardController {
         List<UploadFile> storeImageFiles = fileStore.storeFiles(images);
 
         boardService.updateBoard(id,title,uploadAttachFile,storeImageFiles,body);
-        return "redirect:/members/"+loginId+"/boards";
+        return "redirect:/members/boards";
     }
 
     @GetMapping("new/form")
-    public String getBoardForm(@PathVariable("loginId") String loginId, Model model){
+    public String getBoardForm(@AuthenticatedLoginId String loginId, Model model){
         Member member = memberRepository.findByLoginId(loginId);
         model.addAttribute("member", member);
         model.addAttribute("board", new BoardForm());
@@ -107,7 +110,7 @@ public class BoardController {
     }
 
     @PostMapping("new/form")
-    public String postBoardForm(@PathVariable("loginId") String loginId, @ModelAttribute("board") BoardForm form) throws IOException {
+    public String postBoardForm(@AuthenticatedLoginId String loginId, @ModelAttribute("board") BoardForm form) throws IOException {
         UploadFile attachFile = fileStore.storeFile(form.getAttachFile());
         List<UploadFile> storeImageFiles = fileStore.storeFiles(form.getImageFiles());
 
@@ -120,7 +123,7 @@ public class BoardController {
         board.setMemberInfo(memberRepository.findByLoginId(loginId));
 
         boardService.saveBoard(board);
-        return "redirect:/members/"+loginId+"/boards";
+        return "redirect:/members/boards";
     }
 
     @ResponseBody
@@ -153,14 +156,14 @@ public class BoardController {
 
     // 게시글 삭제
     @PostMapping("{id}/delete")
-    public String boardDelete(@PathVariable("loginId") String loginId, @PathVariable("id") Long id){
+    public String boardDelete(@AuthenticatedLoginId String loginId, @PathVariable("id") Long id){
         //파일 삭제
         Board board = boardRepository.findByBoard(id);
         fileStore.deleteFile(board.getAttachFile(), board.getImageFiles());
         //레포지토리 삭제 (파일경로만 들어있음)
         boardRepository.delete(id);
 
-        return "redirect:/members/" + loginId;
+        return "redirect:/members";
     }
 
 }
