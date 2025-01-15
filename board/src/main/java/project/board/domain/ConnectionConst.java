@@ -7,5 +7,6 @@ public class ConnectionConst {
 
     public final static String URL = "jdbc:mariadb://localhost:3306/board";
     public final static String USERNAME = "root";
-    public final static String PASSWORD = "1111";
+    public final static String PASSWORD = "P@ssw0rd123!";
+    //    public final static String PASSWORD = "1111";
 }
