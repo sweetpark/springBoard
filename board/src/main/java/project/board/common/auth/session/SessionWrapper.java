@@ -15,5 +15,4 @@ import java.time.LocalDateTime;
 public class SessionWrapper {
     private HttpSession session;
     private LocalDateTime connectionTime;
-
 }

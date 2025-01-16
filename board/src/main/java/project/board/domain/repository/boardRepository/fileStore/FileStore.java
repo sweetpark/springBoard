@@ -15,11 +15,19 @@ import java.util.UUID;
 @Component
 @Slf4j
 public class FileStore {
+    private static final String WIN_FILE_DIR = "C:/Users/user/Downloads/";
+    private static final String MAC_FILE_DIR = "/tmp/";
 
-    @Value("${file.dir}")
     private String fileDir;
 
     public String getFullPath(String filename){
+        if (System.getProperty("os.name").toLowerCase().contains("win")){
+            fileDir = WIN_FILE_DIR;
+        }else if(System.getProperty("os.name").toLowerCase().contains("mac")){
+            fileDir = MAC_FILE_DIR;
+        }else{
+            fileDir = "/tmp/";
+        }
         return fileDir + filename;
     }
 

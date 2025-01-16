@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BoardMemRepository implements BoardRepository{
+public class MemBoardRepository implements BoardRepository{
 
     private Map<Long, Board> store = new HashMap<>();
     private Long sequence = 0L;

@@ -3,13 +3,13 @@ package project.board.web.service.login;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import project.board.domain.entity.Member;
-import project.board.domain.repository.memberRepository.MemberMemRespository;
+import project.board.domain.repository.memberRepository.MemMemberRespository;
 import project.board.domain.repository.memberRepository.MemberRepository;
-import project.board.domain.service.login.LoginService;
+import project.board.domain.service.loginService.LoginService;
 
 class LoginServiceTest {
 
-    private MemberRepository memberRepository = new MemberMemRespository();
+    private MemberRepository memberRepository = new MemMemberRespository();
     private LoginService loginService = new LoginService(memberRepository);
 
     @Test

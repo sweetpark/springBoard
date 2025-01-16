@@ -58,7 +58,7 @@ public class MemberEditController {
         member.setAddress(form.getAddress());
 
 
-        memberRepository.updateMember(loginId, member);
+        memberRepository.updateMember(form.getId(), member);
 
         //수정 완료 알림
         return "redirect:/members";

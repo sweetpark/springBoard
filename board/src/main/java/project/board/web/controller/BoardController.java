@@ -19,7 +19,7 @@ import project.board.web.dto.UploadFile;
 import project.board.domain.repository.boardRepository.BoardRepository;
 import project.board.domain.repository.boardRepository.fileStore.FileStore;
 import project.board.domain.repository.memberRepository.MemberRepository;
-import project.board.domain.service.BoardService;
+import project.board.domain.service.boardService.BoardService;
 
 
 import java.io.IOException;

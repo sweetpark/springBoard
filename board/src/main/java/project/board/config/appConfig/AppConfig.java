@@ -12,9 +12,13 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import project.board.common.auth.session.SessionStore;
 import project.board.config.dbConfig.DataSourceConfig;
-import project.board.domain.repository.boardRepository.BoardDBRepository;
+import project.board.domain.repository.boardRepository.JDBCBoardRepository;
 import project.board.domain.repository.boardRepository.BoardRepository;
-import project.board.domain.repository.memberRepository.MemberDBRepository;
+import project.board.domain.repository.commentRepository.CommentRepository;
+import project.board.domain.repository.commentRepository.MemCommentRepository;
+import project.board.domain.repository.fileRepsitory.FileRepository;
+import project.board.domain.repository.fileRepsitory.MemFileRepository;
+import project.board.domain.repository.memberRepository.JDBCMemberRepository;
 import project.board.domain.repository.memberRepository.MemberRepository;
 import project.board.common.filter.LogFilter;
 import project.board.common.filter.LoginCheckFilter;
@@ -30,15 +34,25 @@ public class AppConfig implements WebMvcConfigurer {
     private final SessionStore sessionStore;
 
     @Bean
-    public MemberRepository getMemberRepository() {
+    public MemberRepository MemberRepository() {
 //        return new MemberMemRespository();
-         return new MemberDBRepository(DataSourceConfig.dataSource());
+         return new JDBCMemberRepository(DataSourceConfig.dataSource());
     }
 
     @Bean
     public BoardRepository boardRepository() {
 //        return new BoardMemRepository();
-         return new BoardDBRepository(DataSourceConfig.dataSource());
+         return new JDBCBoardRepository(DataSourceConfig.dataSource());
+    }
+
+    @Bean
+    public CommentRepository commentRepository(){
+        return new MemCommentRepository();
+    }
+
+    @Bean
+    public FileRepository fileRepository(){
+        return new MemFileRepository();
     }
 
     @Bean

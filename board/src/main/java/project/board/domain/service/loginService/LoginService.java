@@ -1,4 +1,4 @@
-package project.board.domain.service.login;
+package project.board.domain.service.loginService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

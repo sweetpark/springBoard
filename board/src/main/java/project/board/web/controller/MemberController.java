@@ -13,7 +13,7 @@ import project.board.domain.entity.Board;
 import project.board.domain.entity.Member;
 import project.board.domain.repository.boardRepository.BoardRepository;
 import project.board.domain.repository.memberRepository.MemberRepository;
-import project.board.domain.service.login.LoginService;
+import project.board.domain.service.loginService.LoginService;
 import project.board.common.validate.bindingResultValidation.BindigResultValidate;
 
 import java.util.List;

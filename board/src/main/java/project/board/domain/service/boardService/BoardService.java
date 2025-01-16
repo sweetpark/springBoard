@@ -1,4 +1,4 @@
-package project.board.domain.service;
+package project.board.domain.service.boardService;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

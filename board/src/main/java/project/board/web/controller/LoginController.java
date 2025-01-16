@@ -17,7 +17,7 @@ import project.board.common.auth.session.SessionStore;
 import project.board.web.dto.LoginForm;
 import project.board.domain.repository.memberRepository.MemberRepository;
 import project.board.common.constant.SessionConst;
-import project.board.domain.service.login.LoginService;
+import project.board.domain.service.loginService.LoginService;
 
 
 @Slf4j
