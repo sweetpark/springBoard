@@ -7,9 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import project.board.auth.session.AuthenticatedLoginId;
-import project.board.domain.dto.Member;
-import project.board.domain.dto.memberUpdateForm;
+import project.board.common.auth.session.AuthenticatedLoginId;
+import project.board.domain.entity.Member;
+import project.board.web.dto.memberUpdateForm;
 import project.board.domain.repository.boardRepository.BoardRepository;
 import project.board.domain.repository.memberRepository.MemberRepository;
 

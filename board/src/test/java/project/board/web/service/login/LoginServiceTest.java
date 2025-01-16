@@ -2,9 +2,10 @@ package project.board.web.service.login;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import project.board.domain.dto.Member;
+import project.board.domain.entity.Member;
 import project.board.domain.repository.memberRepository.MemberMemRespository;
 import project.board.domain.repository.memberRepository.MemberRepository;
+import project.board.domain.service.login.LoginService;
 
 class LoginServiceTest {
 

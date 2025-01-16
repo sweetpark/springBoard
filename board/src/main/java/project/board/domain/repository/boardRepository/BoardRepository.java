@@ -1,8 +1,7 @@
 package project.board.domain.repository.boardRepository;
 
-import org.springframework.web.multipart.MultipartFile;
-import project.board.domain.dto.Board;
-import project.board.domain.dto.UploadFile;
+import project.board.domain.entity.Board;
+import project.board.web.dto.UploadFile;
 
 import java.util.List;
 

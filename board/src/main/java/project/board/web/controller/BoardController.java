@@ -2,7 +2,6 @@ package project.board.web.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -12,19 +11,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriUtils;
-import project.board.auth.session.AuthenticatedLoginId;
-import project.board.auth.session.SessionStore;
-import project.board.domain.dto.Board;
-import project.board.domain.dto.BoardForm;
-import project.board.domain.dto.Member;
-import project.board.domain.dto.UploadFile;
+import project.board.common.auth.session.AuthenticatedLoginId;
+import project.board.domain.entity.Board;
+import project.board.web.dto.BoardForm;
+import project.board.domain.entity.Member;
+import project.board.web.dto.UploadFile;
 import project.board.domain.repository.boardRepository.BoardRepository;
 import project.board.domain.repository.boardRepository.fileStore.FileStore;
 import project.board.domain.repository.memberRepository.MemberRepository;
-import project.board.web.service.BoardService;
+import project.board.domain.service.BoardService;
 
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;

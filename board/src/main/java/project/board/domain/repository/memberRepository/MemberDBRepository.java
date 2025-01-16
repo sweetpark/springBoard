@@ -6,8 +6,8 @@ import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
 import org.springframework.jdbc.support.SQLExceptionTranslator;
-import project.board.auth.enc.AES256Enc;
-import project.board.domain.dto.Member;
+import project.board.common.auth.enc.AES256Enc;
+import project.board.domain.entity.Member;
 
 import javax.sql.DataSource;
 import java.sql.*;

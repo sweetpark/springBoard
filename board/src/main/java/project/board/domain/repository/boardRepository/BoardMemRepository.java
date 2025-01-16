@@ -1,9 +1,8 @@
 package project.board.domain.repository.boardRepository;
 
-import project.board.domain.dto.Board;
-import project.board.domain.dto.UploadFile;
+import project.board.domain.entity.Board;
+import project.board.web.dto.UploadFile;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

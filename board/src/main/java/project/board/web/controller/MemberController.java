@@ -1,9 +1,5 @@
 package project.board.web.controller;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import jakarta.websocket.Session;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,15 +8,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import project.board.auth.session.AuthenticatedLoginId;
-import project.board.domain.dto.Board;
-import project.board.domain.dto.LoginForm;
-import project.board.domain.dto.Member;
+import project.board.common.auth.session.AuthenticatedLoginId;
+import project.board.domain.entity.Board;
+import project.board.domain.entity.Member;
 import project.board.domain.repository.boardRepository.BoardRepository;
 import project.board.domain.repository.memberRepository.MemberRepository;
-import project.board.web.SessionConst;
-import project.board.web.service.login.LoginService;
-import project.board.web.validate.bindingResultValidation.BindigResultValidate;
+import project.board.domain.service.login.LoginService;
+import project.board.common.validate.bindingResultValidation.BindigResultValidate;
 
 import java.util.List;
 

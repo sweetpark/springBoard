@@ -13,16 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import project.board.auth.session.SessionStore;
-import project.board.domain.dto.LoginForm;
-import project.board.domain.dto.Member;
-import project.board.domain.repository.boardRepository.BoardRepository;
+import project.board.common.auth.session.SessionStore;
+import project.board.web.dto.LoginForm;
 import project.board.domain.repository.memberRepository.MemberRepository;
-import project.board.web.SessionConst;
-import project.board.web.service.login.LoginService;
-import project.board.web.validate.bindingResultValidation.BindigResultValidate;
-
-import java.util.concurrent.ConcurrentHashMap;
+import project.board.common.constant.SessionConst;
+import project.board.domain.service.login.LoginService;
 
 
 @Slf4j

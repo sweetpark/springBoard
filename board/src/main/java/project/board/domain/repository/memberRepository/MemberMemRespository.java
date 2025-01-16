@@ -1,11 +1,9 @@
 package project.board.domain.repository.memberRepository;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.InitBinder;
-import project.board.domain.dto.Member;
+import project.board.domain.entity.Member;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

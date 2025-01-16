@@ -1,17 +1,14 @@
 package project.board.domain.repository.boardRepository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
 import org.springframework.jdbc.support.SQLExceptionTranslator;
-import project.board.domain.ConnectionConst;
-import project.board.domain.dto.Board;
-import project.board.domain.dto.Member;
-import project.board.domain.dto.UploadFile;
+import project.board.domain.entity.Board;
+import project.board.domain.entity.Member;
+import project.board.web.dto.UploadFile;
 
 import javax.sql.DataSource;
 import java.sql.*;

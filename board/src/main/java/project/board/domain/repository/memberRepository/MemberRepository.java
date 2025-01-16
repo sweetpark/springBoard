@@ -1,6 +1,6 @@
 package project.board.domain.repository.memberRepository;
 
-import project.board.domain.dto.Member;
+import project.board.domain.entity.Member;
 
 import java.util.List;
 
