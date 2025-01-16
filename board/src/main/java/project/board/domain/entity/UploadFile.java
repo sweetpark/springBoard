@@ -7,9 +7,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class AttachFile {
+public class UploadFile {
     private Long id;
     private Long boardId;
     private String storeFilename;
     private String uploadFilename;
+
+    public UploadFile(){};
+    public UploadFile(String storeFilename, String uploadFilename){
+        this.storeFilename = storeFilename;
+        this.uploadFilename = uploadFilename;
+    }
 }

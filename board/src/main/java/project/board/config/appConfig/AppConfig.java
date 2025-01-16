@@ -11,14 +11,13 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import project.board.common.auth.session.SessionStore;
-import project.board.config.dbConfig.DataSourceConfig;
-import project.board.domain.repository.boardRepository.JDBCBoardRepository;
 import project.board.domain.repository.boardRepository.BoardRepository;
+import project.board.domain.repository.boardRepository.MemBoardRepository;
 import project.board.domain.repository.commentRepository.CommentRepository;
 import project.board.domain.repository.commentRepository.MemCommentRepository;
 import project.board.domain.repository.fileRepsitory.FileRepository;
 import project.board.domain.repository.fileRepsitory.MemFileRepository;
-import project.board.domain.repository.memberRepository.JDBCMemberRepository;
+import project.board.domain.repository.memberRepository.MemMemberRespository;
 import project.board.domain.repository.memberRepository.MemberRepository;
 import project.board.common.filter.LogFilter;
 import project.board.common.filter.LoginCheckFilter;
@@ -35,14 +34,14 @@ public class AppConfig implements WebMvcConfigurer {
 
     @Bean
     public MemberRepository MemberRepository() {
-//        return new MemberMemRespository();
-         return new JDBCMemberRepository(DataSourceConfig.dataSource());
+        return new MemMemberRespository();
+//         return new JDBCMemberRepository(DataSourceConfig.dataSource());
     }
 
     @Bean
     public BoardRepository boardRepository() {
-//        return new BoardMemRepository();
-         return new JDBCBoardRepository(DataSourceConfig.dataSource());
+        return new MemBoardRepository();
+//         return new JDBCBoardRepository(DataSourceConfig.dataSource());
     }
 
     @Bean

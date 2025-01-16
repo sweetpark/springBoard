@@ -63,7 +63,9 @@ public class MemberController {
     public String home(@AuthenticatedLoginId String loginId, Model model){
 
         Member member = memberRepository.findByLoginId(loginId);
-        List<Board> boards = boardRepository.findBoardsByMember(loginId);
+        Long memberId = memberRepository.findByLoginId(loginId).getId();
+
+        List<Board> boards = boardRepository.findBoardsByMember(memberId);
 
         model.addAttribute("member", member);
         model.addAttribute("boards", boards);

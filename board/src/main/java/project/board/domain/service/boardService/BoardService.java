@@ -23,8 +23,8 @@ public class BoardService {
     }
 
     @Transactional
-    public void updateBoard(Long id, String title, UploadFile attachFile, List<UploadFile> images, String body){
-        boardRepository.updateBoard(id,title,attachFile,images,body);
+    public void updateBoard(Long id, String title,/* UploadFile attachFile, List<UploadFile> images,*/String body){
+        boardRepository.updateBoard(id,title,/*attachFile,images,*/body);
     }
 
 }

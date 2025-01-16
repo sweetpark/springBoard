@@ -34,13 +34,7 @@ public class MemberService {
 
     //로그인 아이디 찾기
     public Member getMemberByLoginId(String loginId){
-        List<Member> members = memberRepository.findAll();
-        for (Member member : members) {
-            if(member.getLoginId().equals(loginId)){
-                return member;
-            }
-        }
-        return null;
+        return memberRepository.findByLoginId(loginId);
     }
 
     //회원탈퇴

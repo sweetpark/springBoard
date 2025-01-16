@@ -14,18 +14,12 @@ import java.util.List;
 public class Board {
 
     private Long id;
-    private Long member_id;
+    private Long memberId;
     private String title;
     private String body; //  최대 2000자 (한글 1000자)
     private LocalDateTime create_time;
     private Long good;
     private Long bad;
 
-    
-    
-    //삭제예정
-    private Member memberInfo;
-    private List<UploadFile> imageFiles;
-    private UploadFile attachFile;
-    
+    public Board(){};
 }

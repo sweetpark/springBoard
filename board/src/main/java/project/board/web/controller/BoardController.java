@@ -17,7 +17,6 @@ import project.board.web.dto.BoardForm;
 import project.board.domain.entity.Member;
 import project.board.web.dto.UploadFile;
 import project.board.domain.repository.boardRepository.BoardRepository;
-import project.board.domain.repository.boardRepository.fileStore.FileStore;
 import project.board.domain.repository.memberRepository.MemberRepository;
 import project.board.domain.service.boardService.BoardService;
 
@@ -36,13 +35,13 @@ public class BoardController {
     private final MemberRepository memberRepository;
     private final BoardRepository boardRepository;
     private final BoardService boardService;
-    private final FileStore fileStore;
+//    private final FileStore fileStore;
 
-    public BoardController(MemberRepository memberRepository, BoardRepository boardRepository, BoardService boardService, FileStore fileStore){
+    public BoardController(MemberRepository memberRepository, BoardRepository boardRepository, BoardService boardService/*, FileStore fileStore*/){
         this.memberRepository = memberRepository;
         this.boardRepository = boardRepository;
         this.boardService = boardService;
-        this.fileStore = fileStore;
+//        this.fileStore = fileStore;
     }
 
     @GetMapping
@@ -83,18 +82,18 @@ public class BoardController {
     public String postEditBoard(@AuthenticatedLoginId String loginId,
                                 @PathVariable("id") Long id,
                                 @RequestParam("title") String title,
-                                @RequestParam("attachFile") MultipartFile attachFile,
-                                @RequestParam("imageFiles") List<MultipartFile> images,
+                           /*     @RequestParam("attachFile") MultipartFile attachFile,
+                                @RequestParam("imageFiles") List<MultipartFile> images,*/
                                 @RequestParam("body") String body) throws IOException{
 
         Board board = boardRepository.findByBoard(id);
 
-        fileStore.deleteFile(board.getAttachFile(), board.getImageFiles());
+//        fileStore.deleteFile(board.getAttachFile(), board.getImageFiles());
+//
+//        UploadFile uploadAttachFile = fileStore.storeFile(attachFile);
+//        List<UploadFile> storeImageFiles = fileStore.storeFiles(images);
 
-        UploadFile uploadAttachFile = fileStore.storeFile(attachFile);
-        List<UploadFile> storeImageFiles = fileStore.storeFiles(images);
-
-        boardService.updateBoard(id,title,uploadAttachFile,storeImageFiles,body);
+        boardService.updateBoard(id,title,/*uploadAttachFile,storeImageFiles,*/body);
         return "redirect:/members/boards";
     }
 
@@ -108,59 +107,61 @@ public class BoardController {
 
     @PostMapping("new/form")
     public String postBoardForm(@AuthenticatedLoginId String loginId, @ModelAttribute("board") BoardForm form) throws IOException {
-        UploadFile attachFile = fileStore.storeFile(form.getAttachFile());
-        List<UploadFile> storeImageFiles = fileStore.storeFiles(form.getImageFiles());
+//        UploadFile attachFile = fileStore.storeFile(form.getAttachFile());
+//        List<UploadFile> storeImageFiles = fileStore.storeFiles(form.getImageFiles());
+        Member member = memberRepository.findByLoginId(loginId);
 
         Board board = new Board();
         board.setId(form.getId());
         board.setTitle(form.getTitle());
         board.setBody(form.getBody());
-        board.setAttachFile(attachFile);
-        board.setImageFiles(storeImageFiles);
-        board.setMemberInfo(memberRepository.findByLoginId(loginId));
+        board.setMemberId(member.getId());
+//        board.setAttachFile(attachFile);
+//        board.setImageFiles(storeImageFiles);
+//        board.setMemberInfo(memberRepository.findByLoginId(loginId));
 
         boardService.saveBoard(board);
         return "redirect:/members/boards";
     }
+//
+//    @ResponseBody
+//    @GetMapping("/images/{filename}")
+//    public Resource downloadImage(@PathVariable String filename) throws MalformedURLException{
+//        return new UrlResource("file:" + fileStore.getFullPath(filename));
+//    }
+//
+//    @GetMapping("/attach/{id}")
+//    public ResponseEntity<Resource> downloadAttach(@PathVariable Long id) throws MalformedURLException{
+//
+//        Board board = boardRepository.findByBoard(id);
+//        if (board == null || board.getAttachFile() == null) {
+//            return ResponseEntity.notFound().build(); // 파일이 없을 경우 예외 처리
+//        }
+//
+//        String storeFileName = board.getAttachFile().getStoreFileName();
+//        String uploadFileName = board.getAttachFile().getUploadFileName();
+//
+//        UrlResource resource = new UrlResource("file:" + fileStore.getFullPath(storeFileName));
+//
+//        String encodedUploadFileName = UriUtils.encode(uploadFileName, StandardCharsets.UTF_8);
+//        String contentDisposition = "attachment; filename=\"" + encodedUploadFileName + "\"";
+//
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+//                .body(resource);
+//    }
 
-    @ResponseBody
-    @GetMapping("/images/{filename}")
-    public Resource downloadImage(@PathVariable String filename) throws MalformedURLException{
-        return new UrlResource("file:" + fileStore.getFullPath(filename));
-    }
-
-    @GetMapping("/attach/{id}")
-    public ResponseEntity<Resource> downloadAttach(@PathVariable Long id) throws MalformedURLException{
-
-        Board board = boardRepository.findByBoard(id);
-        if (board == null || board.getAttachFile() == null) {
-            return ResponseEntity.notFound().build(); // 파일이 없을 경우 예외 처리
-        }
-
-        String storeFileName = board.getAttachFile().getStoreFileName();
-        String uploadFileName = board.getAttachFile().getUploadFileName();
-
-        UrlResource resource = new UrlResource("file:" + fileStore.getFullPath(storeFileName));
-
-        String encodedUploadFileName = UriUtils.encode(uploadFileName, StandardCharsets.UTF_8);
-        String contentDisposition = "attachment; filename=\"" + encodedUploadFileName + "\"";
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
-                .body(resource);
-    }
-
-
-    // 게시글 삭제
-    @PostMapping("{id}/delete")
-    public String boardDelete(@AuthenticatedLoginId String loginId, @PathVariable("id") Long id){
-        //파일 삭제
-        Board board = boardRepository.findByBoard(id);
-        fileStore.deleteFile(board.getAttachFile(), board.getImageFiles());
-        //레포지토리 삭제 (파일경로만 들어있음)
-        boardRepository.delete(id);
-
-        return "redirect:/members";
-    }
+//
+//    // 게시글 삭제
+//    @PostMapping("{id}/delete")
+//    public String boardDelete(@AuthenticatedLoginId String loginId, @PathVariable("id") Long id){
+//        //파일 삭제
+//        Board board = boardRepository.findByBoard(id);
+//        fileStore.deleteFile(board.getAttachFile(), board.getImageFiles());
+//        //레포지토리 삭제 (파일경로만 들어있음)
+//        boardRepository.delete(id);
+//
+//        return "redirect:/members";
+//    }
 
 }

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-public class comment {
+public class Comment {
     private Long id;
     private Long boardId;
     private Long memberId;
@@ -17,4 +17,6 @@ public class comment {
     private LocalDateTime createTime;
     private Long good;
     private Long bad;
+
+    public Comment(){};
 }

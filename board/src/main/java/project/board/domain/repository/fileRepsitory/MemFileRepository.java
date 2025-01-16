@@ -1,38 +1,37 @@
 package project.board.domain.repository.fileRepsitory;
 
-import project.board.domain.entity.AttachFile;
-import project.board.domain.entity.ImageFile;
-
+import project.board.domain.entity.UploadFile;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class MemFileRepository implements FileRepository{
-    Map<Long, AttachFile> attachStore = new HashMap<>();
-    Map<Long, ImageFile> imageStore = new HashMap<>();
 
-    private static Long sequenceAttach = 0L;
-    private static Long sequenceImage = 0L;
+    Map<Long, UploadFile> store = new HashMap<>();
+
+    private static Long sequence = 0L;
 
     @Override
-    public void saveImage(List<ImageFile> imageFile) {
-        for (ImageFile file : imageFile) {
-            imageStore.put(sequenceImage++, file);
-        }
+    public void save(UploadFile file) {
+        file.setId(++sequence);
+        store.put(sequence, file);
+
     }
 
     @Override
-    public void saveAttach(AttachFile attachFile) {
-        attachStore.put(sequenceAttach++, attachFile);
+    public void delete(Long id) {
+        store.remove(id);
     }
 
     @Override
-    public void deleteImage(Long id) {
-        imageStore.remove(id);
+    public List<UploadFile> findAll() {
+        return store.values().stream().toList();
     }
 
     @Override
-    public void deleteAttach(Long id) {
-        attachStore.remove(id);
+    public UploadFile findById(Long id) {
+        return store.get(id);
     }
+
+
 }

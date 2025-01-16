@@ -1,6 +1,7 @@
 package project.board.domain.repository.memberRepository;
 
 import lombok.extern.slf4j.Slf4j;
+import project.board.common.auth.enc.AES256Enc;
 import project.board.domain.entity.Member;
 
 import java.util.ArrayList;
@@ -19,7 +20,9 @@ public class MemMemberRespository implements MemberRepository{
 
     @Override
     public void save(Member member) {
-        store.put(sequence++, member);
+        member.setId(++sequence);
+        member.setPasswd(AES256Enc.encrypt(member.getPasswd()));
+        store.put(sequence, member);
     }
 
     @Override
@@ -63,6 +66,8 @@ public class MemMemberRespository implements MemberRepository{
         }
 
     }
+
+
     @Override
     public void clear() {
         store.clear();

@@ -1,12 +1,16 @@
 package project.board.domain.repository.boardRepository;
 
+import lombok.RequiredArgsConstructor;
 import project.board.domain.entity.Board;
+import project.board.domain.repository.memberRepository.MemberRepository;
 import project.board.web.dto.UploadFile;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 public class MemBoardRepository implements BoardRepository{
 
@@ -16,6 +20,7 @@ public class MemBoardRepository implements BoardRepository{
     @Override
     public void save(Board board) {
         board.setId(++sequence);
+        board.setCreate_time(LocalDateTime.now());
         store.put(board.getId(), board);
     }
 
@@ -30,12 +35,12 @@ public class MemBoardRepository implements BoardRepository{
     }
 
     @Override
-    public List<Board> findBoardsByMember(String loginId) {
+    public List<Board> findBoardsByMember(Long id) {
 
         ArrayList<Board> memberBoards = new ArrayList<>();
         List<Board> boards= findAll();
         for (Board board : boards) {
-            if (board.getMemberInfo().getLoginId().equals(loginId))
+            if (board.getMemberId().equals(id))
             {
                 memberBoards.add(board);
             }
@@ -49,12 +54,12 @@ public class MemBoardRepository implements BoardRepository{
     }
 
     @Override
-    public void updateBoard(Long id, String title, UploadFile attachFile, List<UploadFile> images ,String body) {
+    public void updateBoard(Long id, String title,/* UploadFile attachFile, List<UploadFile> images ,*/String body) {
 
         Board findBoard = findByBoard(id);
         findBoard.setTitle(title);
-        findBoard.setAttachFile(attachFile);
-        findBoard.setImageFiles(images);
+//        findBoard.setAttachFile(attachFile);
+//        findBoard.setImageFiles(images);
         findBoard.setBody(body);
 
     }
