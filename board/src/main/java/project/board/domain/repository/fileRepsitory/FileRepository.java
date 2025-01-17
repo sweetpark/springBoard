@@ -10,4 +10,5 @@ public interface FileRepository {
     void delete(Long id);
     List<UploadFile> findAll();
     UploadFile findById(Long id);
+    List<UploadFile> findByBoardId(Long boardId);
 }

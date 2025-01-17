@@ -12,6 +12,7 @@ public class UploadFile {
     private Long boardId;
     private String storeFilename;
     private String uploadFilename;
+    private String fileType;
 
     public UploadFile(){};
     public UploadFile(String storeFilename, String uploadFilename){

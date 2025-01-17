@@ -1,7 +1,10 @@
 package project.board.domain.service.fileService;
 
+import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import project.board.domain.entity.UploadFile;
@@ -9,9 +12,9 @@ import project.board.domain.repository.fileRepsitory.FileRepository;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+
+import static project.board.common.constant.FileConstant.*;
 
 
 @Slf4j
@@ -19,8 +22,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FileService {
 
-    private static final String WIN_FILE_DIR = "C:/Users/user/Downloads/";
-    private static final String MAC_FILE_DIR = "/tmp/";
     private String fileDir;
     private final FileRepository fileRepository;
 
@@ -28,6 +29,12 @@ public class FileService {
     public void saveFile(List<UploadFile> files, Long boardId){
         for (UploadFile file : files) {
             file.setBoardId(boardId);
+            if(isImageFile(extractExt(file.getUploadFilename()))){
+                file.setFileType(IMAGE_FILE);
+            }else{
+                file.setFileType(ATTACH_FILE);
+            }
+
             fileRepository.save(file);
         }
     }
@@ -86,7 +93,17 @@ public class FileService {
     }
 
     //파일 다운로드
+    public ResponseEntity<Resource> fileDownload(Long boardId){
 
+        List<UploadFile> findFilesByBoardId = fileRepository.findByBoardId(boardId);
+        for (UploadFile uploadFile : findFilesByBoardId) {
+            //여러개 파일 ResponseEntity에 보내기
+        }
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+                .body(resource);
+    }
 
 
     //파일 경로
@@ -112,4 +129,14 @@ public class FileService {
         int pos = originalFileName.lastIndexOf(".");
         return originalFileName.substring(pos+1);
     }
+
+
+    //이미지 파일 확인
+     private static boolean isImageFile(String fileNameExt){
+        if(fileNameExt == null || fileNameExt.isEmpty()){
+            return false;
+        }
+        return IMAGE_EXTENTIONS.contains(fileNameExt.toLowerCase());
+     }
+
 }
